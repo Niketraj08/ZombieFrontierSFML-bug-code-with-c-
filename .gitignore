@@ -1,0 +1,7 @@
+build/
+.vscode/
+*.exe
+*.obj
+*.o
+*.pdb
+zombie_frontier_save.dat
