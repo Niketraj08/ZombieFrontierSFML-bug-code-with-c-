@@ -77,6 +77,33 @@ You awaken in the heart of a fallen quarantine zone. Hordes of infected mutants 
 
 ---
 
+## 💻 Native C++ Compilation (Windows, Linux, macOS)
+
+The complete C++17 + SFML source code is located in `src/main.cpp` (and `native/main.cpp`).
+
+### 1. Windows Build & Run (Batch Script)
+Run `build_and_run.bat` or run in PowerShell / Command Prompt:
+```powershell
+cmake -S . -B build
+cmake --build build --config Release
+.\build\Release\ZombieFrontier.exe
+```
+
+### 2. Linux / macOS Build (Makefile or CMake)
+Using `make`:
+```bash
+make
+./ZombieFrontier
+```
+Or using CMake:
+```bash
+cmake -S . -B build
+cmake --build build
+./build/ZombieFrontier
+```
+
+---
+
 ## 🛠️ Technical Architecture
 
 - **Rendering Engine**: Optimized HTML5 2D Canvas matching SFML viewport (`1280x720`) with 2D world space (`3200x2200`).
