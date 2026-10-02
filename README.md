@@ -1,94 +1,52 @@
-# Zombie Frontier - SFML
+# Zombie Frontier
 
-C++17 + SFML 3.0.2 graphical top-down survival shooter.
+Top-down 2D graphical survival shooter migrated to React, TypeScript, HTML5 Canvas, and Tailwind CSS for AI Studio Web. Originally imported from `Niketraj08/ZombieFrontierSFML-bug-code-with-c-`.
 
 ## Features
 
-- Real graphical window
-- WASD movement
-- Mouse aiming
-- Shooting
-- Reload
-- Pistol
-- Shotgun
-- Assault Rifle
-- Plasma Rifle
-- Grenades
-- Medkits
-- XP and level system
-- Gold and score
-- Enemy AI
-- Walker
-- Runner
-- Spitter
-- Brute
-- Necro Lord boss
-- Waves
-- Pickups
-- Particle effects
-- Camera
-- Shop
-- Inventory
-- Quests
-- Statistics
-- Save/load
-- Pause
-- Game over
-- Victory
-
-## Font
-
-The program tries:
-
-1. assets/DejaVuSans.ttf
-2. assets/font.ttf
-3. C:/Windows/Fonts/arial.ttf
-4. C:/Windows/Fonts/segoeui.ttf
-
-So on Windows it should normally work without a bundled font. For portable
-distribution, put a TTF file in assets/DejaVuSans.ttf.
-
-## Build
-
-Install a C++17 compiler, CMake and Git.
-
-From the project folder:
-
-```powershell
-cmake -S . -B build
-cmake --build build --config Release
-```
-
-Run:
-
-```powershell
-.\build\Release\ZombieFrontier.exe
-```
-
-If using a MinGW generator, the executable may be:
-
-```powershell
-.\build\ZombieFrontier.exe
-```
-
-The first CMake configure downloads SFML 3.0.2 from the official SFML
-repository, so internet access is required on the first build.
+- Real-time 2D Canvas rendering with camera tracking
+- WASD movement and mouse aiming
+- Shooting and reloading
+- 4 weapons: Pistol, Shotgun, Assault Rifle, Plasma Rifle
+- Explosive grenades with radius damage
+- Medkits and healing
+- XP, level progression, and stat upgrades
+- Gold and score economy
+- Enemy AI with 5 archetypes:
+  - Walker
+  - Runner
+  - Spitter (ranged projectile)
+  - Brute (spread projectile)
+  - Necro Lord Boss (aura, high health, victory condition)
+- Wave scaling and progression
+- Pickups: Gold, Medkits, Grenades
+- Particle and gore effects
+- Armory / Weapons shop
+- Inventory management
+- Quests with automated reward claiming
+- Player statistics modal
+- Browser localStorage Save / Load
+- Pause, Game Over, and Victory screens
+- Procedural Web Audio API sound synthesis
 
 ## Controls
 
-W A S D = Move
-Mouse Left = Shoot
-R = Reload
-G = Grenade
-H = Medkit
-P / E = Shop
-I / TAB = Inventory
-Q = Quests
-T = Statistics
-F5 = Save
-F9 = Load
-ESC = Pause / Close panel
+- **W A S D / Arrow Keys**: Move
+- **Mouse Aim**: Aim weapon
+- **Mouse Left / Click**: Shoot
+- **1, 2, 3, 4**: Switch active weapons
+- **R**: Reload magazine
+- **G**: Throw grenade
+- **H**: Use medkit (+50 HP)
+- **P / E**: Toggle Armory / Shop
+- **I / TAB**: Toggle Inventory
+- **Q**: Toggle Quest Log
+- **T**: Toggle Player Statistics
+- **F5**: Save game
+- **F9**: Load game
+- **ESC**: Pause / Close panel
 
 ## Goal
 
 Reach level 5 and defeat the Necro Lord.
+
