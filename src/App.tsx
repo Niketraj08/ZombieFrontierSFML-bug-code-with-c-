@@ -66,6 +66,14 @@ export function App() {
 
       {/* Screen Modals & Overlays */}
       <UIModals engine={engine} onRefresh={forceUpdate} />
+
+      {/* Developer Footer */}
+      <footer className="absolute bottom-2 z-20 pointer-events-auto flex items-center justify-center gap-2 text-[11px] sm:text-xs text-slate-400 bg-slate-950/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-800 shadow-lg">
+        <span className="font-bold text-slate-300">Zombie Frontier</span>
+        <span className="text-slate-600">•</span>
+        <span className="text-slate-300 font-medium">Developed by</span>
+        <span className="text-cyan-400 font-bold tracking-wide">Niket Raj</span>
+      </footer>
     </div>
   );
 }

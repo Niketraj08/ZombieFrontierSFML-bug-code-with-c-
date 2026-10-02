@@ -110,10 +110,18 @@ const MainMenuModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
         })}
       </div>
 
-      <div className="mt-8 text-xs text-slate-500 font-mono text-center">
-        Use <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">W/S</kbd> or{' '}
-        <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">↑/↓</kbd> &{' '}
-        <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Enter</kbd> or click to select
+      <div className="mt-8 text-center flex flex-col items-center gap-2">
+        <div className="text-xs text-slate-400 font-mono">
+          Use <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">W/S</kbd> or{' '}
+          <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">↑/↓</kbd> &{' '}
+          <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Enter</kbd> or click to select
+        </div>
+        <div className="px-4 py-1.5 bg-slate-900/90 border border-slate-800 rounded-full text-xs text-slate-400 flex items-center gap-2 shadow-md">
+          <span>Zombie Frontier</span>
+          <span className="text-slate-600">•</span>
+          <span>Developed by</span>
+          <span className="text-cyan-400 font-bold tracking-wide">Niket Raj</span>
+        </div>
       </div>
     </div>
   );
@@ -203,9 +211,13 @@ const AboutModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
         <p className="text-xs text-purple-400 font-mono mb-6">Niketraj08/ZombieFrontierSFML Web Port</p>
 
         <div className="text-slate-300 text-sm space-y-3 mb-6 text-left bg-slate-950/70 p-4 rounded-xl border border-slate-800">
-          <p>• Originally designed as a C++17 SFML top-down graphical survival shooter.</p>
+          <p>• Originally created and developed as a C++17 SFML top-down graphical survival shooter by <strong className="text-cyan-300">Niket Raj</strong>.</p>
           <p>• Faithfully migrated to modern web canvas technology in AI Studio with real-time smooth mechanics, projectile combat, and zero external asset dependencies.</p>
           <p>• Features procedural sound synthesis using the Web Audio API, responsive letterboxing, high-precision mouse tracking, and full keyboard/click dual controls.</p>
+          <div className="border-t border-slate-800 pt-3 flex items-center justify-between text-xs text-slate-400">
+            <span>Author & Developer:</span>
+            <span className="text-cyan-400 font-bold text-sm">Niket Raj</span>
+          </div>
         </div>
 
         <button
