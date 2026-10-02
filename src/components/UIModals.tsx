@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GameEngine } from '../game/GameEngine.ts';
-import { Shield, Crosshair, Award, ShoppingCart, Check, Heart, Skull, Play, BookOpen, Info, RotateCcw, Save, FolderOpen, X } from 'lucide-react';
+import { Shield, Crosshair, Award, ShoppingCart, Check, Heart, Skull, Play, BookOpen, Info, RotateCcw, Save, FolderOpen, X, Cpu } from 'lucide-react';
+import { CppSourceModal } from './CppSourceModal.tsx';
 
 interface ModalProps {
   engine: GameEngine;
@@ -8,9 +9,16 @@ interface ModalProps {
 }
 
 export const UIModals: React.FC<ModalProps> = ({ engine, onRefresh }) => {
+  const [showCpp, setShowCpp] = useState(false);
+
   // Main Menu Screen
   if (engine.screen === 'menu') {
-    return <MainMenuModal engine={engine} onRefresh={onRefresh} />;
+    return (
+      <>
+        <MainMenuModal engine={engine} onRefresh={onRefresh} onOpenCpp={() => setShowCpp(true)} />
+        {showCpp && <CppSourceModal onClose={() => setShowCpp(false)} />}
+      </>
+    );
   }
 
   // Help Screen
@@ -51,14 +59,23 @@ export const UIModals: React.FC<ModalProps> = ({ engine, onRefresh }) => {
   }
 
   if (paused) {
-    return <PauseModal engine={engine} onRefresh={onRefresh} />;
+    return (
+      <>
+        <PauseModal engine={engine} onRefresh={onRefresh} onOpenCpp={() => setShowCpp(true)} />
+        {showCpp && <CppSourceModal onClose={() => setShowCpp(false)} />}
+      </>
+    );
   }
 
-  return null;
+  return (
+    <>
+      {showCpp && <CppSourceModal onClose={() => setShowCpp(false)} />}
+    </>
+  );
 };
 
 // Main Menu
-const MainMenuModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
+const MainMenuModal: React.FC<ModalProps & { onOpenCpp: () => void }> = ({ engine, onRefresh, onOpenCpp }) => {
   const items = [
     { label: 'NEW GAME', icon: <Play className="w-5 h-5" /> },
     { label: 'LOAD GAME', icon: <FolderOpen className="w-5 h-5" /> },
@@ -80,16 +97,16 @@ const MainMenuModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
 
   return (
     <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-center p-4 z-50">
-      <div className="text-center mb-8">
+      <div className="text-center mb-6">
         <h1 className="text-5xl sm:text-6xl font-black tracking-wider text-red-500 drop-shadow-[0_4px_16px_rgba(239,68,68,0.5)]">
           ZOMBIE FRONTIER
         </h1>
         <p className="text-cyan-300 font-semibold tracking-widest mt-2 text-sm sm:text-base uppercase">
-          Top-Down Graphical Survival Shooter
+          C++17 + SFML 3 Architecture (Web Edition)
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 w-full max-w-sm">
+      <div className="flex flex-col gap-2.5 w-full max-w-sm">
         {items.map((item, idx) => {
           const isSelected = engine.menuIndex === idx;
           return (
@@ -97,7 +114,7 @@ const MainMenuModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
               key={item.label}
               onClick={() => handleSelect(idx)}
               onMouseEnter={() => { engine.menuIndex = idx; onRefresh(); }}
-              className={`w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl font-bold tracking-wider transition-all duration-150 border ${
+              className={`w-full flex items-center justify-center gap-3 py-3 px-6 rounded-xl font-bold tracking-wider transition-all duration-150 border ${
                 isSelected
                   ? 'bg-cyan-700 text-white border-cyan-400 shadow-lg shadow-cyan-900/40 scale-105'
                   : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 border-slate-700'
@@ -108,6 +125,15 @@ const MainMenuModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
             </button>
           );
         })}
+
+        {/* Dedicated C++ Native Architecture Button */}
+        <button
+          onClick={onOpenCpp}
+          className="w-full flex items-center justify-center gap-2.5 py-2.5 px-6 rounded-xl font-bold text-xs tracking-wider bg-indigo-950/90 hover:bg-indigo-900 border border-indigo-500/80 text-indigo-200 transition shadow-md shadow-indigo-950/50"
+        >
+          <Cpu className="w-4 h-4 text-cyan-400" />
+          <span>VIEW C++ SOURCE & BUILD (.EXE)</span>
+        </button>
       </div>
 
       <div className="mt-8 text-center flex flex-col items-center gap-2">
@@ -599,7 +625,7 @@ const StatsModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
 };
 
 // Pause Modal
-const PauseModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
+const PauseModal: React.FC<ModalProps & { onOpenCpp: () => void }> = ({ engine, onRefresh, onOpenCpp }) => {
   const resume = () => {
     engine.overlays.paused = false;
     onRefresh();
@@ -608,21 +634,21 @@ const PauseModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
   return (
     <div className="absolute inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center p-4 z-40">
       <div className="bg-slate-900 border border-cyan-500/70 rounded-2xl max-w-sm w-full p-6 shadow-2xl text-center">
-        <h2 className="text-3xl font-black text-amber-400 mb-6 tracking-wider">
+        <h2 className="text-3xl font-black text-amber-400 mb-5 tracking-wider">
           GAME PAUSED
         </h2>
 
-        <div className="flex flex-col gap-2.5 mb-6">
+        <div className="flex flex-col gap-2 mb-4">
           <button
             onClick={resume}
-            className="w-full py-3 bg-cyan-700 hover:bg-cyan-600 text-white font-bold rounded-xl transition"
+            className="w-full py-2.5 bg-cyan-700 hover:bg-cyan-600 text-white font-bold rounded-xl transition"
           >
             Resume (ESC)
           </button>
 
           <button
             onClick={() => { engine.save(); onRefresh(); }}
-            className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition flex items-center justify-center gap-2"
+            className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition flex items-center justify-center gap-2 text-sm"
           >
             <Save className="w-4 h-4 text-cyan-400" />
             Save Game (F5)
@@ -630,7 +656,7 @@ const PauseModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
 
           <button
             onClick={() => { engine.load(); onRefresh(); }}
-            className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition flex items-center justify-center gap-2"
+            className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition flex items-center justify-center gap-2 text-sm"
           >
             <FolderOpen className="w-4 h-4 text-emerald-400" />
             Load Game (F9)
@@ -642,9 +668,17 @@ const PauseModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
               engine.overlays.paused = false;
               onRefresh();
             }}
-            className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition"
+            className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl transition text-sm"
           >
             Open Armory (P)
+          </button>
+
+          <button
+            onClick={onOpenCpp}
+            className="w-full py-2 bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-600/70 text-indigo-200 font-semibold rounded-xl transition flex items-center justify-center gap-2 text-xs"
+          >
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            C++ Source & Build (.EXE)
           </button>
 
           <button
@@ -653,10 +687,14 @@ const PauseModal: React.FC<ModalProps> = ({ engine, onRefresh }) => {
               engine.screen = 'menu';
               onRefresh();
             }}
-            className="w-full py-2.5 bg-red-950/80 hover:bg-red-900 border border-red-700/60 text-red-200 font-semibold rounded-xl transition mt-2"
+            className="w-full py-2 bg-red-950/80 hover:bg-red-900 border border-red-700/60 text-red-200 font-semibold rounded-xl transition text-sm mt-1"
           >
             Quit to Title
           </button>
+        </div>
+
+        <div className="text-[11px] text-slate-400">
+          Developer: <span className="text-cyan-400 font-bold">Niket Raj</span>
         </div>
       </div>
     </div>
